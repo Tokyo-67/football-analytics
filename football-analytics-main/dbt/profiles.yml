@@ -1,0 +1,18 @@
+# dbt-duckdb connection profile.
+#
+# There are no secrets in here, just the path to the local DuckDB file, so it's
+# fine to commit and keeps the project reproducible. Run dbt from the dbt/
+# directory (the path resolves relative to the working directory):
+#
+#     cd dbt
+#     dbt build --profiles-dir .
+#
+# Point it somewhere else with the DBT_DUCKDB_PATH env var if you need to.
+football_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('DBT_DUCKDB_PATH', '../data/football.duckdb') }}"
+      # DuckDB names the catalog after the file stem -> database is 'football'.
+      threads: 4
